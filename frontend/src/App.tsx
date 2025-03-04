@@ -12,7 +12,8 @@ import WishlistPage from './pages/WishlistPage';
 const App = () => {
   return (
     <>
-      <nav />
+      <Route path="/signup" element={<Signup />} /> 
+      <Route path="/login" element={<Login />} />    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
@@ -20,8 +21,6 @@ const App = () => {
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />    
-        <Route path="/signup" element={<Signup />} /> 
         <Route path="/subscription" element={<Subscription />} />
       </Routes>
     </>

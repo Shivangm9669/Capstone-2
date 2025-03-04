@@ -1,15 +1,13 @@
 
-
-using EcommerceAPI.DTOs;
+using EcommerceAPI.Models;
 using EcommerceAPI.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace EcommerceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class WishlistController : ControllerBase
     {
         private readonly IWishlistService _wishlistService;
@@ -19,22 +17,53 @@ namespace EcommerceAPI.Controllers
             _wishlistService = wishlistService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<WishlistDto>> GetWishlist(int userId)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Wishlist>>> GetAllWishlists()
         {
-            var wishlist = await _wishlistService.GetWishlistByUserIdAsync(userId);
+            var wishlists = await _wishlistService.GetAllWishlistsAsync();
+            return Ok(wishlists);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Wishlist>> GetWishlistById(int id)
+        {
+            var wishlist = await _wishlistService.GetWishlistByIdAsync(id);
+            if (wishlist == null)
+            {
+                return NotFound();
+            }
             return Ok(wishlist);
         }
 
-        [HttpPut("{wishlistId}")]
-        [Authorize]
-        public async Task<IActionResult> UpdateWishlist(int wishlistId, [FromBody] int productId)
+        [HttpPost]
+        public async Task<ActionResult<Wishlist>> CreateWishlist(Wishlist wishlist)
         {
-            var result = await _wishlistService.UpdateWishlistAsync(wishlistId, productId);
-            if (!result) return NotFound("Wishlist not found or update failed.");
-
-            return Ok("Wishlist updated successfully.");
+            var createdWishlist = await _wishlistService.CreateWishlistAsync(wishlist);
+            return CreatedAtAction(nameof(GetWishlistById), new { id = createdWishlist.WishlistId }, createdWishlist);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateWishlist(int id, Wishlist wishlist)
+        {
+            if (id != wishlist.WishlistId)
+            {
+                return BadRequest();
+            }
+
+            await _wishlistService.UpdateWishlistAsync(wishlist);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWishlist(int id)
+        {
+            var result = await _wishlistService.DeleteWishlistAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

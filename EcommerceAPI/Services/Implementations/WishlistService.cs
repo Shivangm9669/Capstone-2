@@ -49,5 +49,42 @@ namespace EcommerceAPI.Services.Implementations
             wishlist.ProductId = productId;  // Update the product in wishlist
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<IEnumerable<Wishlist>> GetAllWishlistsAsync()
+        {
+            return await _context.Wishlists.ToListAsync();
+        }
+
+        public async Task<Wishlist> GetWishlistByIdAsync(int id)
+        {
+            return await _context.Wishlists.FindAsync(id) ?? throw new InvalidOperationException("Wishlist not found");
+        }
+
+        public async Task<Wishlist> CreateWishlistAsync(Wishlist wishlist)
+        {
+            _context.Wishlists.Add(wishlist);
+            await _context.SaveChangesAsync();
+            return wishlist;
+        }
+
+        public async Task<Wishlist> UpdateWishlistAsync(Wishlist wishlist)
+        {
+            _context.Wishlists.Update(wishlist);
+            await _context.SaveChangesAsync();
+            return wishlist;
+        }
+
+        public async Task<bool> DeleteWishlistAsync(int id)
+        {
+            var wishlist = await _context.Wishlists.FindAsync(id);
+            if (wishlist == null)
+            {
+                return false;
+            }
+
+            _context.Wishlists.Remove(wishlist);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

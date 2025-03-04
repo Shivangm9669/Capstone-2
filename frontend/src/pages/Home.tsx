@@ -17,14 +17,6 @@ const Home = () => {
 
   return (
     <div>
- 
-      <header>
-        <nav>
-          <Link to="/">Home</Link> | <Link to="/shop">Shop</Link> | <Link to="/cart">Cart</Link> | <Link to="/profile">Profile</Link>
-        </nav>
-      </header>
-
-      {/* Banner */}
       {state.user?.isPremium && <div>Welcome Premium User! Enjoy exclusive deals!</div>}
 
       <h2>Featured Products</h2>
