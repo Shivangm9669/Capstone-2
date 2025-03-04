@@ -47,7 +47,13 @@ namespace EcommerceAPI.Services.Implementations
                 return null;
 
             var token = GenerateJwtToken(user);
-            return new AuthResponseDto { Token = token };
+            return new AuthResponseDto { Token = token,
+        User = new UserDto
+        {
+            Name = user.Name,
+            Email = user.Email,
+            IsPremium = user.IsPremium  // Assuming your User model has this field
+        } };
         }
 
         // Generate JWT Token

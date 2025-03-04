@@ -15,10 +15,16 @@ namespace EcommerceAPI.Services.Implementations
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync() =>
-            await _context.Products.Include(p => p.Category).ToListAsync();
+    await _context.Products
+        .Include(p => p.Category)
+        .Include(p => p.ProductImages)
+        .ToListAsync();
 
         public async Task<Product?> GetProductByIdAsync(int productId) =>
-            await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.ProductId == productId);
+            await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.ProductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
 
         public async Task<bool> AddProductAsync(Product product)
         {

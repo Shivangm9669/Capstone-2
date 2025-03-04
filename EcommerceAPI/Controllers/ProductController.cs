@@ -19,7 +19,21 @@ namespace EcommerceAPI.Controllers
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             var products = await _productService.GetAllProductsAsync();
-            return Ok(products);
+
+            // Map products to DTOs including image URLs
+            var productDtos = products.Select(p => new ProductDto
+            {
+                ProductId = p.ProductId,
+                Name = p.Name,
+                Price = p.Price,
+                Description = p.Description,
+                Rating = p.Rating,
+                CategoryId = p.CategoryId,
+                ImageUrls = p.ProductImages?.Select(img => img.ImageUrl).ToList() ?? new List<string>()
+            });
+
+            return Ok(productDtos);
         }
+
     }
 }

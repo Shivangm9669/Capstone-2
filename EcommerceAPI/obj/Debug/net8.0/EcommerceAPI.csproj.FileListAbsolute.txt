@@ -144,3 +144,4 @@ C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\Ecommer
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\EcommerceAPI\obj\Debug\net8.0\EcommerceAPI.genruntimeconfig.cache
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\EcommerceAPI\obj\Debug\net8.0\ref\EcommerceAPI.dll
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\EcommerceAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\EcommerceAPI\obj\Debug\net8.0\EcommerceAPI.sourcelink.json
