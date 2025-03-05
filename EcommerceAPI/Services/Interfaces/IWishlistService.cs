@@ -1,15 +1,11 @@
 using EcommerceAPI.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Services.Interfaces
 {
     public interface IWishlistService
     {
-        Task<IEnumerable<Wishlist>> GetAllWishlistsAsync();
-        Task<Wishlist> GetWishlistByIdAsync(int id);
-        Task<Wishlist> CreateWishlistAsync(Wishlist wishlist);
-        Task<Wishlist> UpdateWishlistAsync(Wishlist wishlist);
-        Task<bool> DeleteWishlistAsync(int id);
+        Task<IActionResult> AddorUpdateWishlist(int userId, int productId, bool isAdding);
+        Task<List<Wishlist>> GetWishlist(int userId);
     }
 }

@@ -50,9 +50,10 @@ namespace EcommerceAPI.Services.Implementations
             return new AuthResponseDto { Token = token,
         User = new UserDto
         {
+            UserId = user.UserId,
             Name = user.Name,
             Email = user.Email,
-            IsPremium = user.IsPremium  // Assuming your User model has this field
+            IsPremium = user.IsPremium 
         } };
         }
 

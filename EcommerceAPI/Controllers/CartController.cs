@@ -1,5 +1,3 @@
-
-
 using EcommerceAPI.DTOs;
 using EcommerceAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -7,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Authorize]
     public class CartController : ControllerBase
     {
@@ -19,11 +17,22 @@ namespace EcommerceAPI.Controllers
             _cartService = cartService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<CartDto>> GetCart(int userId)
+        [HttpPost("{userId}/add")]
+        public async Task<IActionResult> AddToCart(int userId, [FromBody] AddToCartDto addToCartDto)
         {
-            var cart = await _cartService.GetCartByUserIdAsync(userId);
-            return Ok(cart);
+            var result = await _cartService.AddToCartAsync(userId, addToCartDto.ProductId, addToCartDto.Quantity);
+            if (!result) return BadRequest("Failed to add item to cart.");
+
+            return Ok("Item added to cart successfully.");
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetCartDetails(int userId)
+        {
+            var cartDetails = await _cartService.GetCartDetailsAsync(userId);
+            if (cartDetails == null) return NotFound("Cart not found.");
+
+            return Ok(cartDetails);
         }
     }
 }

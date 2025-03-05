@@ -1,8 +1,6 @@
-
 using EcommerceAPI.Models;
 using EcommerceAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace EcommerceAPI.Controllers
 {
@@ -17,53 +15,29 @@ namespace EcommerceAPI.Controllers
             _wishlistService = wishlistService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Wishlist>>> GetAllWishlists()
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<Wishlist>>> GetWishlist(int userId)
         {
-            var wishlists = await _wishlistService.GetAllWishlistsAsync();
-            return Ok(wishlists);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Wishlist>> GetWishlistById(int id)
-        {
-            var wishlist = await _wishlistService.GetWishlistByIdAsync(id);
-            if (wishlist == null)
+            var wishlist = await _wishlistService.GetWishlist(userId);
+            if (wishlist == null || !wishlist.Any())
             {
                 return NotFound();
             }
             return Ok(wishlist);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Wishlist>> CreateWishlist(Wishlist wishlist)
+        [HttpPost("{userId}/add")]
+        public async Task<IActionResult> AddToWishlist(int userId, [FromBody] int productId)
         {
-            var createdWishlist = await _wishlistService.CreateWishlistAsync(wishlist);
-            return CreatedAtAction(nameof(GetWishlistById), new { id = createdWishlist.WishlistId }, createdWishlist);
+            var result = await _wishlistService.AddorUpdateWishlist(userId, productId, true);
+            return result;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateWishlist(int id, Wishlist wishlist)
+        [HttpDelete("{userId}/remove/{productId}")]
+        public async Task<IActionResult> RemoveFromWishlist(int userId, int productId)
         {
-            if (id != wishlist.WishlistId)
-            {
-                return BadRequest();
-            }
-
-            await _wishlistService.UpdateWishlistAsync(wishlist);
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWishlist(int id)
-        {
-            var result = await _wishlistService.DeleteWishlistAsync(id);
-            if (!result)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            var result = await _wishlistService.AddorUpdateWishlist(userId, productId, false);
+            return result;
         }
     }
 }

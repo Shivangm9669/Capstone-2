@@ -2,6 +2,7 @@ using EcommerceAPI.Data;
 using EcommerceAPI.Models;
 using EcommerceAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using EcommerceAPI.DTOs;
 
 namespace EcommerceAPI.Services.Implementations
 {
@@ -53,6 +54,30 @@ namespace EcommerceAPI.Services.Implementations
             var cartItems = _context.CartItems.Where(ci => ci.CartId == cart.CartId);
             _context.CartItems.RemoveRange(cartItems);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<CartDto> GetCartDetailsAsync(int userId)
+        {
+            var cart = await GetCartByUserIdAsync(userId);
+            if (cart == null) return null;
+
+            var cartItems = await _context.CartItems
+                .Where(ci => ci.CartId == cart.CartId)
+                .Select(ci => new CartItemDto
+                {
+                    ProductId = ci.ProductId,
+                    ProductName = _context.Products.FirstOrDefault(p => p.ProductId == ci.ProductId).Name,
+                    Price = _context.Products.FirstOrDefault(p => p.ProductId == ci.ProductId).Price,
+                    Quantity = ci.Quantity
+                }).ToListAsync();
+
+            return new CartDto
+            {
+                CartId = cart.CartId,
+                UserId = cart.UserId,
+                Items = cartItems,
+                TotalPrice = cartItems.Sum(ci => ci.Price * ci.Quantity)
+            };
         }
     }
 }
