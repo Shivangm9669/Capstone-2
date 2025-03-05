@@ -287,3 +287,8 @@ C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\ecommer
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\ecommerceapi\bin\Debug\net8.0\EcommerceAPI.pdb
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\ecommerceapi\obj\Debug\net8.0\EcommerceAPI.genruntimeconfig.cache
 C:\Users\ShivangMauryaMAQSoft\OneDrive - MAQ Software\Desktop\Capstone 2\ecommerceapi\obj\Debug\net8.0\ref\EcommerceAPI.dll
+C:\Users\shiva\OneDrive\Desktop\Capstone-2\EcommerceAPI\bin\Debug\net8.0\EcommerceAPI.deps.json
+C:\Users\shiva\OneDrive\Desktop\Capstone-2\EcommerceAPI\bin\Debug\net8.0\EcommerceAPI.runtimeconfig.json
+C:\Users\shiva\OneDrive\Desktop\Capstone-2\EcommerceAPI\bin\Debug\net8.0\EcommerceAPI.pdb
+C:\Users\shiva\OneDrive\Desktop\Capstone-2\EcommerceAPI\obj\Debug\net8.0\EcommerceAPI.genruntimeconfig.cache
+C:\Users\shiva\OneDrive\Desktop\Capstone-2\EcommerceAPI\obj\Debug\net8.0\ref\EcommerceAPI.dll

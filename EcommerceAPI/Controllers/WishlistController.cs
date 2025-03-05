@@ -19,10 +19,6 @@ namespace EcommerceAPI.Controllers
         public async Task<ActionResult<List<Wishlist>>> GetWishlist(int userId)
         {
             var wishlist = await _wishlistService.GetWishlist(userId);
-            if (wishlist == null || !wishlist.Any())
-            {
-                return NotFound();
-            }
             return Ok(wishlist);
         }
 
